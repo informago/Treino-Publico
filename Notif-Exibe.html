@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+<script type="text/javascript">
+
+    function getNotifications(reset) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                var response = xmlhttp.responseText;
+                var notifications = JSON.parse(response); // create JSON object from response  
+
+                for (var i = 0; i < notifications.length; i++) {
+                    var notificationID = notifications[i].id;
+                    var entityID = notifications[i].entityID;
+                    var text = notifications[i].text;
+                    var type = notifications[i].type;
+                    var read = notifications[i].read;
+
+                    // add notification into your HTML here  
+                }
+            }
+        }
+        xmlhttp.open("GET", "getNotifications.php?reset=" + reset, true);
+        xmlhttp.send();
+    }
+
+</script>
+
+</head>
+<body>
+
+</body>
+</html>
