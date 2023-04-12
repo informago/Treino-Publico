@@ -7,24 +7,57 @@
     <title>Converte Moedas</title>
 </head>
 <body>
-    Valor R$: <input type="text" name="txtValor1" id="txtValor1" /> 
-    <select name="selMoeda" id="selMoeda">
-        <option value="USD" selected>USD - Dólar</option>
-    </select><br />
-    Convertido: <div id="txtValor2"></div><br />
-    <button name="cmdConverte" id="cmdConverte" onClick="Converte()">Converte</button>
+    <form name="frmConverte" id="frmConverte">
+
+        Valor R$: <input type="text" name="txtValor1" id="txtValor1" />
+
+        <select name="selMoeda" id="selMoeda">
+            <option value="USD" selected>USD - Dólar Americano</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="JPY">JPY - Yen</option>
+            <option value="GBP">GBP - Libra Esterlina</option>
+            <option value="RUB">RUB - Rublo</option>
+            <option value="AUD">AUD - Dólar Australiano</option>
+            <option value="CAD">CAD - Dólar Canadense</option>
+            <option value="CNY">CNY - Yuan</option>
+            <option value="INR">INR - Rúpia da Índia</option>
+            <option value="MXN">MXN - Peso Mexicano</option>
+        </select><br />
+
+        Convertido: <div id="txtValor2"></div><br />
+
+        <button type="submit" name="cmdConverte" id="cmdConverte" onClick="Converte()">Converte</button>
+
+    </form>
 
     <script>
 
+        // Suprime postback
+        const frm = document.getElementById("frmConverte");
+        frm.addEventListener("submit", TrataEnvio);
+        function TrataEnvio(e) {
+            e.preventDefault();
+        }
+
+        // Efetua conversão
         function Converte() {
-            const Original = document.getElementById("txtValor1").value;
-            const Moeda = document.getElementById("selMoeda").value;
+            const Original  = document.getElementById("txtValor1").value;
+            const MoedaDest = document.getElementById("selMoeda").value;
+            const MoedaLoc  = "BRL";
             const Resultado = document.getElementById("txtValor2");
             var Ret = 0;
 
-            Ret = Original * 2;
-
-            Resultado.innerHTML = Ret.toString;
+            const apiURL   = "https://api.freecurrencyapi.com/v1/latest";
+            const apiKey   = "R7yACykwlBwi3WzF1MshLGRM6EP56otJeguhYP48";
+            var   Consulta = `${apiURL}?currencies=${MoedaLoc}&base_currency=${MoedaDest}&apikey=${apiKey}`;
+            return fetch(Consulta)
+                .then((response) => response.text())
+                .then((data) => {
+                    Res  = JSON.parse(data);
+                    Conv = Res.data.BRL;
+                    Ret = Original * Conv;
+                    Resultado.innerHTML = Ret;
+                });
         }
 
     </script>
