@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converte Moedas</title>
+</head>
+<body>
+    Valor R$: <input type="text" name="txtValor1" id="txtValor1" /> 
+    <select name="selMoeda" id="selMoeda">
+        <option value="USD" selected>USD - Dólar</option>
+    </select><br />
+    Convertido: <div id="txtValor2"></div><br />
+    <button name="cmdConverte" id="cmdConverte" onClick="Converte()">Converte</button>
+
+    <script>
+
+        function Converte() {
+            const Original = document.getElementById("txtValor1").value;
+            const Moeda = document.getElementById("selMoeda").value;
+            const Resultado = document.getElementById("txtValor2");
+            var Ret = 0;
+
+            Ret = Original * 2;
+
+            Resultado.innerHTML = Ret.toString;
+        }
+
+    </script>
+
+</body>
+</html>
